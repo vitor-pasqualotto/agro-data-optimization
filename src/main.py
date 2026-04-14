@@ -1,24 +1,19 @@
-from processamento import carregar_parametros, avaliar_saude_solo
+from processamento import carregar_parametros, avaliar_saude_solo, coletar_dados
 
 def main():
 
-    # 1. Carregar Regras (JSON)
-    regras_tecnicas = carregar_parametros("data/parametros.json")
+    # Carregar Regras (JSON)
+    regras = carregar_parametros("data/parametros.json")
+    if not regras: return
 
-    # 2. Simular uma entrada de dados (Posteriormente virá do Oracle ou Input)
-    amostra_teste = {
-        "cultura": "soja",
-        "ph": 5.2,
-        "fosforo": 10.5,
-        "potassio": 55.0,
-        "nitrogenio": 15.0
-    }
-
-    # 3. Processar
-    status, acao = avaliar_saude_solo(amostra_teste, regras_tecnicas)
+    # Input do usuário
+    dados_usuario = coletar_dados(regras)
+    
+    # Processar
+    status, acao = avaliar_saude_solo(dados_usuario, regras)
 
     print("-" * 40)
-    print(f"RELATÓRIO DE ANÁLISE: {amostra_teste['cultura'].upper()}")
+    print(f"RELATÓRIO DE ANÁLISE: {dados_usuario['cultura'].upper()}")
     print(f"Status: {status}")
     print(f"Recomendação: {acao}")
     print("-" * 40)
