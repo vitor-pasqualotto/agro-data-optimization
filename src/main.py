@@ -1,6 +1,9 @@
 from processamento import carregar_parametros, avaliar_saude_solo, coletar_dados
+from database import salvar_analise_db
 
 def main():
+
+    print("=== MONITORAMENTO AGRO ===")
 
     # Carregar Regras (JSON)
     regras = carregar_parametros("data/parametros.json")
@@ -17,6 +20,9 @@ def main():
     print(f"Status: {status}")
     print(f"Recomendação: {acao}")
     print("-" * 40)
+
+    # Salvando no banco de dados
+    salvar_analise_db(dados_usuario, status, acao)
 
 if __name__ == "__main__":
     main()
